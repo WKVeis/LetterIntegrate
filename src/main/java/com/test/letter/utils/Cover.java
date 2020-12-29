@@ -1,4 +1,5 @@
 package com.test.letter.utils;
+import com.sun.deploy.util.StringUtils;
 import com.test.letter.model.LetterInit;
 
 import java.util.ArrayList;
@@ -19,27 +20,47 @@ public class Cover {
         }else {
             arrStr = value.split("");
             if (arrStr.length > 2) {
-                String msg = "Please enter the numbers 0-99 consecutively, separated by \",\"";
+                String msg = "Please enter the numbers 0-99 consecutively, separated by ','";
                 resultValue.add(msg);
                 return resultValue;
             }
         }
         List<String[]> dataList = new ArrayList<>();
+        String[] arrStr2 = null;
         for (int i = 0; i < arrStr.length; i++) {
+            System.out.println("the first element separated by a comma is:" + arrStr[i]);
             arrInput.append(arrStr[i]);
             if (i < arrStr.length - 1) {
                 arrInput.append(",");
             }
-            List<String> lettersList = LetterInit.LetterMap().get(arrStr[i]);
-            if (lettersList.size() > 0) {
-                String[] letterArr = (String[]) lettersList.toArray();
-                dataList.add(letterArr);
+            //
+            arrStr2 = arrStr[i].split("");
+            for (int j=0;j<arrStr2.length;j++) {
+                switch (arrStr2[j]) {
+                    case "0":
+                        break;
+                    case "1":
+                        break;
+                    default:
+                        //Get the set of letters that each number map to
+                        List<String> lettersList = LetterInit.LetterMap().get(arrStr2[j]);
+                        //Put each letter in a new List
+                        if (lettersList.size() > 0) {
+                            String[] letterArr = (String[]) lettersList.toArray();
+                            dataList.add(letterArr);
+                        }
+                }
             }
         }
         arrInput.append("}");
         List<String[]> resultList = ToLetters(dataList, 0, null);
         System.out.println("The input obtained is" + arrInput.toString());
         System.out.print("All matched letter combinations are:");
+        if (null == resultList || resultList.isEmpty()) {
+            String msg = "None match";
+            resultValue.add(msg);
+            return resultValue;
+        }
         for (int i = 0; i < resultList.size(); i++) {
             StringBuilder builder = new StringBuilder();
             String[] letterArr = resultList.get(i);
@@ -49,7 +70,6 @@ public class Cover {
             }
             resultValue.add(builder.toString());
         }
-        String m= resultValue.toString();
         return resultValue;
     }
 
