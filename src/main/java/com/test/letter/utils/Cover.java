@@ -1,5 +1,4 @@
 package com.test.letter.utils;
-import com.sun.deploy.util.StringUtils;
 import com.test.letter.model.LetterInit;
 
 import java.util.ArrayList;
@@ -33,7 +32,6 @@ public class Cover {
             if (i < arrStr.length - 1) {
                 arrInput.append(",");
             }
-            //
             arrStr2 = arrStr[i].split("");
             for (int j=0;j<arrStr2.length;j++) {
                 switch (arrStr2[j]) {
@@ -43,7 +41,7 @@ public class Cover {
                         break;
                     default:
                         //Get the set of letters that each number map to
-                        List<String> lettersList = LetterInit.LetterMap().get(arrStr2[j]);
+                        List<String> lettersList = LetterInit.getInstance().LetterMap().get(arrStr2[j]);
                         //Put each letter in a new List
                         if (lettersList.size() > 0) {
                             String[] letterArr = (String[]) lettersList.toArray();
@@ -64,6 +62,7 @@ public class Cover {
         for (int i = 0; i < resultList.size(); i++) {
             StringBuilder builder = new StringBuilder();
             String[] letterArr = resultList.get(i);
+            System.out.print("|");
             for (String s : letterArr) {
                 System.out.print(s);
                 builder.append(s);

@@ -6,8 +6,14 @@ import java.util.*;
  * Created by veis on 2020/12/28
  */
 public class LetterInit {
-    public static Map<String,List<String>> LetterMap() {
-        HashMap<String, List<String>> map = new HashMap<>();
+    private final static LetterInit INSTANCE = new LetterInit();
+
+    public static LetterInit getInstance() {
+
+        return INSTANCE;
+    }
+    public Map<String, List<String>> LetterMap() {
+        Hashtable<String, List<String>> map = new Hashtable<>();
         map.put("1", Arrays.asList(""));
         map.put("2", Arrays.asList("A", "B", "C"));
         map.put("3", Arrays.asList("D", "E", "F"));
@@ -20,4 +26,5 @@ public class LetterInit {
         map.put("0", Arrays.asList(""));
         return map;
     }
+
 }
